@@ -1,0 +1,48 @@
+{"intents": 
+[
+		{
+			"tag": "greeting",
+         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+         "responses": ["Hello, thanks for asking", "Good to see you again", "Hi there, how can I help?"],
+         "context": [""]
+        },
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+         "responses": ["See you!", "Have a nice day", "Bye! Come back again soon."],
+         "context": [""]
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "context": [""]
+        },
+        {"tag": "noanswer",
+         "patterns": [],
+         "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+         "context": [""]
+        },
+		{"tag": "options",
+         "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered"],
+         "responses": ["I can guide you through School Location, Enrollment Procedures or any inquiries you may have."],
+         "context": [""]
+        },
+		
+		{"tag": "enrollment",
+         "patterns": ["paano mag enroll?","how can i enroll","how to enroll","what are the enrollment procedures","enrollment instruction"],
+         "responses": ["FEU - Institute of Technology Registration Directory"],
+         "context": [""]
+        },
+		{"tag": "paymentonline",
+         "patterns": ["paano magbayad online?","how to pay online","payment online","panu mag bayad online?","how can i pay online","payment online instruction","payment procedures"],
+         "responses": ["FEU - Institute of Technology Payments' Directory"],
+         "context": [""]
+        },
+		
+		{"tag": "schoollocation_search",
+         "patterns": ["saan yung location ng library","saan yung canteen?","saan ung principal's office?","saan ung treasury?","san ung security office?","saan ung chapel?","saan naka lugar yung CR?","saan yung CR?"],
+         "responses": ["FEU - Institute of Technology Floor Directory"],
+         "context": ["schoollocation_search_by_params"]
+        }
+		
+   ]
+}

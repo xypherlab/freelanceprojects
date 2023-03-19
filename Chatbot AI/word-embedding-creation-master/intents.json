@@ -1,0 +1,86 @@
+{"intents":
+[
+		{
+			"tag": "greeting",
+         "patterns": ["Hi there", "How are you", "Is anyone there?","Hey","Hola", "Hello", "Good day"],
+         "responses": ["Hello, thanks for asking", "Good to see you again", "Hi there, how can I help?"],
+         "context": [""]
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure"],
+         "context": [""]
+        },
+        {"tag": "noanswer",
+         "patterns": ["shit","gago","tanga","stupid","lol","ulol","finals","midterm","exam","fuck","bobo","aso","kain","eat","hotdog"],
+         "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
+         "context": [""]
+        },
+		{"tag": "enrollment",
+         "patterns": ["enrolling","paano magenroll?","paano mag enroll?","how can i enroll","how to enroll","what are the enrollment procedures","enrollment instruction","pano mag enroll pag first year","pano mag enroll pag freshmen","pano mag enroll pag transferee","enrollment steps","pano mag enroll online","how to enroll freshmen","how to enroll first year","how to enroll transferee student","other way to enroll","easiest way to enroll"],
+         "responses": ["FEU - Institute of Technology Registration Directory","FEU - Institute of Technology Registration Directory"],
+         "context": [""]
+        },
+		{"tag": "payment",
+         "patterns": ["fee","list of banks","gcash","mga banks","bank","tuition","pay","how to pay","Payments","mga banko","bangko","pano mag magbayad","gmail","email","feu emails","paano magbayad online?","how to pay online","payment online","panu mag bayad online?"],
+         "responses": ["FEU - Institute of Technology Payments' Directory","FEU - Institute of Technology Payments' Directory"],
+         "context": [""]
+        },
+		{"tag": "floor",
+         "patterns": ["IALAP","floor's directory","admission","SSO","CSO","engineering","computer","CpE","Guidance","Mechanical","ME","Civil","CE","HSC","MPS","dept.","waiting area","library","office","clinic","DU","department","EEE","canteen","where","saan","saan yung discipline's office?","saan yung DO?","where is the DO?","where is the disciplines office?","saan ung health service?","saan yung cafeteria?","nasaan ung OSES","where is the libary"],
+         "responses": ["FEU - Institute of Technology Floor Directory","FEU - Institute of Technology Floor Directory"],
+         "context": [""]
+        },
+		{"tag": "jdcschedule",
+         "patterns": ["anu schedule ngaun ni Doc. Engr. Juan Dela Cruz","anung oras consultation ni juan dela cruz","what is juan dela cruz's schedule","juan dela cruz's consultation hours?"],
+         "responses": ["Juan Dela Cruz Schedule","Juan Dela Cruz Schedule"],
+         "context": [""]
+        }
+		,
+		{"tag": "cashierschedule",
+         "patterns": ["is the cashier open?","anu oras bukas ung cashier?","when was cashier opening?","anung oras magbubukas ung cashier?","Kailan bukas ung cashier","kelan magbubukas ung cashier"],
+         "responses": ["Cashier Schedule","Cashier Schedule"],
+         "context": [""]
+        }
+		,
+		{"tag": "registarschedule",
+         "patterns": ["is the registar open?","anu oras bukas ung registar?","when was registar opening?","anung oras magbubukas ung registar?","Kailan bukas ung registar","kelan magbubukas ung registar"],
+         "responses": ["Registar Schedule","Registar Schedule"],
+         "context": [""]
+        }
+        ,
+		{"tag": "pmschedule",
+         "patterns": ["anu schedule ngaun ni engr. pedro magtapang","anung oras consultation ni pedro magtapang","what is pedro magtapang's schedule","pedro magtapang's consultation hours?"],
+         "responses": ["Pedro Matapang Schedule","Pedro Matapang Schedule"],
+         "context": [""]
+        }
+        ,
+		{"tag": "mgschedule",
+         "patterns": ["anu schedule ngaun ni engr. maria gonda","anung oras consultation ni maria gonda","what is maria gonda's schedule","maria gonda's consultation hours?"],
+         "responses": ["Maria Gonda Schedule","Maria Gonda Schedule"],
+         "context": [""]
+        }
+        ,
+		{"tag": "eececourse",
+         "patterns": ["subjects offer","what are the available subjects","ano yung mga open na subject","open na subject","available na subject","offering","offer","what do EEE course offer","anong courses ang inooffer ng ECE/EE department","available courses","available subject","subjects","section","course","course","list of schedules","course offering"],
+         "responses": ["EECE Course","EECE Course"],
+         "context": [""]
+        }
+        ,
+		{"tag": "milescomponents",
+         "patterns": ["main","Powerpoint","video","formative","supplementary","guide","preparation","summative","technical","review","miles","canvas","discipline unit"],
+         "responses": ["Miles’s component","Miles’s component"],
+         "context": [""]
+        }
+        ,
+		{"tag": "profschedule",
+         "patterns": ["faculty hour","list of professor email","faculty consultation","schedule of professors","list of professor","professors time consultation","professor time","time consultation","consultation hour"],
+         "responses": ["Professor Schedule","Professor Schedule"],
+         "context": [""]
+        }
+
+
+
+
+   ]
+}

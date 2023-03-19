@@ -1,0 +1,1 @@
+{"intents": [{"tag": "goodbye", "patterns": ["Bye", "See ya"], "responses": ["Okay", "Whatever"], "context": [""]}, {"tag": "goodbye", "patterns": ["Bye", "See ya"], "responses": ["Okay", "Whatever"], "context": [""]}]}
