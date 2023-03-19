@@ -1,0 +1,6 @@
+PyQt4
+pymysqk
+numpy
+pandas
+pyqtgraph
+socket
