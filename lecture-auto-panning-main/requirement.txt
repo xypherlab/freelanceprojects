@@ -1,0 +1,5 @@
+PyQt4
+librosa
+scipy
+moviepy
+mss

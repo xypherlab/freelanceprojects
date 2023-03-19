@@ -1,0 +1,4 @@
+PyQt4
+opencv-contrib-python
+Adafruit_DHT
+pandas

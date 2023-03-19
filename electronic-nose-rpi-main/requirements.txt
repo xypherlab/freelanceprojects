@@ -1,0 +1,4 @@
+scikit-learn>=0.21
+numpy
+wx
+https://github.com/adafruit/Adafruit_Python_GPIO

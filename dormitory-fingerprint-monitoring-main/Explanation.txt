@@ -1,0 +1,65 @@
+Dormitory Fingerprint Log
+
+Materials:
+1. Fingerprint
+2. SMS Module
+3. Zigbee
+4. Raspberry Pi
+5. Atmega 328 (Microcontroller)
+6. PL2303
+7. Power Supply
+
+1. Fingerprint
+
+-Fingerprint scanner has 4 pin out which is tx (transmit), rx (receive), vcc and gnd. 
+-VCC is connected to +5V and GND is connected to ground.
+-The tx of fingerprint is connected to rx of microcontroller pin 12
+-The rx of fingerprint is connected to tx of microcontroller pin 14
+-The type of communication used for this module is software serial
+-This module is interfaced by microcontroller and the library used came from adafruit
+-The interfaced functions of this module are recognition, registration, and deletion of fingerprint scanned.
+
+
+2. SMS Module
+-SMS Module has 4 pin out which is tx (transmit), rx (receive), vcc and gnd. 
+-VCC is connected to +5V and GND is connected to ground.
+-The tx of SMS Module is connected to rx of microcontroller pin 2
+-The rx of SMS Module is connected to tx of microcontroller pin 3
+-The type of communication used for this module is hardware serial
+-This module is interfaced via AT Commands from the microcontroller
+-The interfaced functions of this module are to read inbox and send message
+-The information sent and received is relayed to raspberry pi via zigbee
+
+3. Zigbee
+-Zigbee has 4 pin out which is tx (transmit), rx (receive), vcc and gnd. 
+-VCC is connected to +5V and GND is connected to ground.
+-The tx of Zigbee 1 is connected to rx of microcontroller pin 10
+-The rx of Zigbee 1 is connected to tx of microcontroller pin 11
+-The tx of Zigbee 2 is connected to rx of raspberry pi pin 8
+-The rx of Zigbee 2 is connected to tx of raspberry pi pin 10
+-The type of communication used for this module is hardware serial on raspberry pi and software serial on microcontroller
+-The main function of this module is to transmit and received information coming and going between microcontroller and raspberry pi
+
+4. Rasberry Pi
+-This module is a pocket PC running Linux based operating system which responsible for processing the information and controlling the microcontroller to interface all modules needed in the whole system
+-It is operated by a 5V 2A supply
+-Python program was used in the Student Dormitory Monitoring System which is running on this module
+-Reports and database are in CSV form
+
+5. Atmega 328 (Microcontroller)
+-The microcontroller is responsible for interfacing all the modules used in the system
+-It is powered by 5V supply
+-It only contains 1 hardware serial
+-The rest of the module were interfaced using software serial
+-The crystal oscillator connected in the microcontroller functions as a processor which operates the internal clock and responsible for continuous execution of the program.
+
+6. PL2303
+-Responsible for uploading the program in microcontroller
+-It has 5 pin out which is tx (transmit), rx (receive), DTR, vcc and gnd. 
+-DTR is directly connected to pin 1 of microcontroller. It functions as an auto reset for the program to be uploaded.
+-The program is transmitted in microcontroller via serial communication type.
+
+7. Power Supply
+-The power source has 220V AC to 12V AC step down transformer 
+-It has 1n4007 bridge rectifier to convert 12V AC to DC
+-The 12V is then regulated into 5V by LM7805

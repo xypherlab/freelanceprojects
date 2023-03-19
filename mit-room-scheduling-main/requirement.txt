@@ -1,0 +1,6 @@
+PyQt4
+numpy
+pandas
+smtplib
+imaplib
+email
