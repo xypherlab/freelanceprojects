@@ -1,0 +1,258 @@
+#include <SoftwareSerial.h>
+#include <OneWire.h>
+#define RX 4
+#define TX 3
+String AP = "viva";
+String PASS = "mapuauniv";
+String HOST = "192.168.43.53";
+String PORT = "80";
+int countTrueCommand;
+int countTimeCommand;
+boolean found = false;
+int valSensor = 1;
+SoftwareSerial esp8266(RX, TX);
+int Pulse = A0;
+int flag=0;
+unsigned long T1;
+unsigned long T2;
+unsigned long Time;
+unsigned long a;
+unsigned long b;
+#include <OneWire.h>
+int rrpin = 15; 
+
+int DS18S20_Pin = 5;
+OneWire ds(DS18S20_Pin);
+const int pbpin = 13;
+const int buzzerpin =  16;
+const int ledApin = 9;
+const int ledBpin =  10;  
+const int ledCpin = 11;
+const int ledDpin =  12;
+int pbstate = 0;
+int i;
+int hrwarn=0;
+int rrwarn=0;
+int tmpwarn=0;
+void setup() {
+  Serial.begin(9600);
+  esp8266.begin(115200);
+  pinMode(ledApin, OUTPUT);
+  pinMode(ledBpin, OUTPUT);
+  pinMode(ledCpin, OUTPUT);
+  pinMode(ledDpin, OUTPUT);
+  pinMode(pbpin, INPUT_PULLUP);
+  pinMode(rrpin, INPUT_PULLUP);
+
+  pinMode(buzzerpin, OUTPUT);
+  digitalWrite(ledApin, HIGH);
+  digitalWrite(ledBpin, HIGH);
+  digitalWrite(ledCpin, HIGH);
+  digitalWrite(ledDpin, HIGH);
+  digitalWrite(buzzerpin, HIGH);
+  delay(3000);
+  //digitalWrite(ledApin, LOW);
+  digitalWrite(ledBpin, LOW);
+  digitalWrite(ledCpin, LOW);
+  digitalWrite(ledDpin, LOW);
+  digitalWrite(buzzerpin, LOW);
+
+  
+  sendCommand("AT", 5, "OK");
+  sendCommand("AT+CWMODE=3", 5, "OK");
+  sendCommand("AT+CWJAP=\"" + AP + "\",\"" + PASS + "\"", 20, "OK");
+  sendCommand("AT+CIPMUX=1", 5, "OK");
+  sendCommand("AT+CIPSTART=0,\"TCP\",\"" + HOST + "\"," + PORT, 15, "OK");
+  T1 = millis();
+}
+
+void loop() {
+  float temperature = getTemp();
+  Serial.println(temperature);
+  unsigned long a = 0;
+while (a==0)
+{  
+int sensorVal = digitalRead(rrpin);
+if (sensorVal == LOW and flag == 0)
+    {Serial.print("Low: "); Serial.println(analogRead(A0));
+      flag = 1;
+      delay(20);
+    }
+     else if (sensorVal == HIGH and flag == 1)
+    {Serial.print("High: "); Serial.println(analogRead(A0));
+      T1 = millis();
+      flag = 2;
+      delay(20);
+      
+    }
+    else if (sensorVal == LOW and flag == 2)
+    { Serial.print("Low: "); Serial.println(analogRead(A0));
+     
+      flag = 3;
+      delay(20);
+    }
+    else if (sensorVal == HIGH and flag == 3)
+    { Serial.print("High: "); Serial.println(analogRead(A0));
+      T2 = millis();
+      unsigned long Time = T2 - T1;
+      unsigned long respRate = 60000L;
+      respRate = respRate / Time;
+      Serial.print("RR = ");
+      Serial.println(respRate);
+      flag = 0;
+      delay(20);
+      a = respRate;
+      //delay(3000);
+
+    }
+}   
+  i=0;
+ while (i!=5)
+  {
+  while (digitalRead(Pulse) == HIGH);
+  while (digitalRead(Pulse) == LOW);
+  int T1 = millis();
+while (digitalRead(Pulse) == HIGH);
+  while (digitalRead(Pulse) == LOW);
+  int T2 = millis();
+  int Time = T2 - T1;
+  unsigned long HeartRate = 60000L;
+  HeartRate = HeartRate / Time;
+  Serial.print("BPM = ");
+  Serial.println(HeartRate);
+  b = HeartRate;
+  i=i+1;
+  }
+  
+  //b=60;
+ 
+if (a<10 or a>22 and b<80 or b>120 or temperature<37.2)
+{
+  
+  digitalWrite(buzzerpin, HIGH);
+
+}
+
+if (a<10 or a>22)
+{
+digitalWrite(ledBpin, HIGH);
+digitalWrite(buzzerpin, HIGH);
+rrwarn=1;  
+}
+if (b<80 or b>120)
+{
+digitalWrite(ledCpin, HIGH);  
+digitalWrite(buzzerpin, HIGH);
+hrwarn=1;
+}
+if (temperature>37.2)
+{
+digitalWrite(ledDpin, HIGH);
+digitalWrite(buzzerpin, HIGH);
+tmpwarn=1;  
+}
+pbstate = digitalRead(pbpin);
+if (pbstate==HIGH)
+{ digitalWrite(buzzerpin, LOW);
+
+  digitalWrite(ledBpin, LOW);
+  digitalWrite(ledCpin, LOW); 
+  digitalWrite(ledDpin, LOW);
+}
+ String getData = "0," + String(a) + "," + String(temperature) + "," + String(b) + ","+ String(rrwarn) + ","+ String(hrwarn) + ","+ String(tmpwarn) + ",";
+ hrwarn=0;
+ rrwarn=0;
+ tmpwarn=0;
+  Serial.print("Data: ");
+  Serial.println(getData);
+
+  //sendCommand("AT+CIPSTART=0,\"TCP\",\""+ HOST +"\","+ PORT,15,"OK");
+
+  sendCommand("AT+CIPSEND=0," + String(getData.length() + 4), 4, ">");
+  esp8266.println(getData); delay(1500); countTrueCommand++;
+  //sendCommand("AT+CIPCLOSE=0",5,"OK");
+}
+
+
+
+
+void sendCommand(String command, int maxTime, char readReplay[]) {
+  Serial.print(countTrueCommand);
+  Serial.print(". at command => ");
+  Serial.print(command);
+  Serial.print(" ");
+  while (countTimeCommand < (maxTime * 1))
+  {
+    esp8266.println(command);//at+cipsend
+    if (esp8266.find(readReplay)) //ok
+    {
+      found = true;
+      break;
+    }
+
+    countTimeCommand++;
+  }
+
+  if (found == true)
+  {
+    Serial.println("OK");
+    countTrueCommand++;
+    countTimeCommand = 0;
+  }
+
+  if (found == false)
+  {
+    Serial.println("Fail");
+    countTrueCommand = 0;
+    countTimeCommand = 0;
+  }
+
+  found = false;
+}
+
+float getTemp() {
+  //returns the temperature from one DS18S20 in DEG Celsius
+
+  byte data[12];
+  byte addr[8];
+
+  if ( !ds.search(addr)) {
+    //no more sensors on chain, reset search
+    ds.reset_search();
+    return -1000;
+  }
+
+  if ( OneWire::crc8( addr, 7) != addr[7]) {
+    Serial.println("CRC is not valid!");
+    return -1000;
+  }
+
+  if ( addr[0] != 0x10 && addr[0] != 0x28) {
+    Serial.print("Device is not recognized");
+    return -1000;
+  }
+
+  ds.reset();
+  ds.select(addr);
+  ds.write(0x44, 1); // start conversion, with parasite power on at the end
+
+  byte present = ds.reset();
+  ds.select(addr);
+  ds.write(0xBE); // Read Scratchpad
+
+
+  for (int i = 0; i < 9; i++) { // we need 9 bytes
+    data[i] = ds.read();
+  }
+
+  ds.reset_search();
+
+  byte MSB = data[1];
+  byte LSB = data[0];
+
+  float tempRead = ((MSB << 8) | LSB); //using two's compliment
+  float TemperatureSum = tempRead / 16;
+
+  return TemperatureSum;
+
+}
